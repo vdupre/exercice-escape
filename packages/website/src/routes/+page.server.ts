@@ -35,18 +35,18 @@ export const load = async () => {
 export const actions = {
     create: async ({ request }) => {
         const data = await request.formData();
-        const x = data.get('x') as string;
-        const y = data.get('y') as string;
+        const x = Number(data.get('x') as string);
+        const y = Number(data.get('y') as string);
         const color = data.get('color') as string;
 
         await gql(`
-			mutation colorPixel {
-				colorPixel(color: "red", x: 1, y: 1) {
+			mutation colorPixel ($color: String!, $x: Int!, $y: Int!) {
+				colorPixel(color: $color, x: $x, y: $y) {
 					color
 					x
 					y
 				}
-			}	
+			}
 		`, {
 			x, y, color
 		});
