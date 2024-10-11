@@ -2,6 +2,7 @@
 export const schema = `
     type Query {
         hello: String
+        pixelGrid: PixelGrid
     },
 
     type Mutation {
@@ -16,5 +17,12 @@ export const schema = `
         x: Int!
         y: Int!
         color: String
+    },
+
+    scalar Color,
+    
+    type PixelGrid {
+        size: Int!
+        cells: [[Color]]
     }
 `;
