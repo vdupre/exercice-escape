@@ -19,13 +19,17 @@ export const resolvers = {
       },
     },
     Mutation: {
-        colorPixel: async (_: never, pixelDTO: PixelDTO) => {
+        colorPixel: async (_: never, pixelDTO: PixelDTO): Promise<PixelDTO> => {
             // TODO missing schema validation - use Zod
 
             // convert dto into model, here that the same structure, let's keep it here for the exercice
             const pixel: Pixel = pixelDTO; 
 
+            // call the domain
             await colorPixel(pixel);
+
+            // return saved value, here input = output
+            return pixelDTO;
         }
     },
     Subscription: {
