@@ -1,41 +1,22 @@
 import { createServer } from 'node:http';
 import { createSchema, createYoga } from 'graphql-yoga';
-import { createPubSub } from 'graphql-yoga';
 
-export const pubsub = createPubSub<{
-  hello: [string];
-}>();
+import { schema } from './application/schema.js';
+import { /*pubsub,*/ resolvers } from './application/resolver.js';
 
 const yoga = createYoga({
   schema: createSchema({
-    typeDefs: /* GraphQL */ `
-      type Query {
-        hello: String
-      }
-
-      type Subscription {
-        hello: String
-      }
-    `,
-    resolvers: {
-      Query: {
-        hello: () => 'world'
-      },
-      Subscription: {
-        hello: {
-          subscribe: () => pubsub.subscribe('hello'),
-          resolve: (payload) => payload
-        }
-      }
-    }
+    typeDefs: schema,
+    resolvers
   })
 });
 
-let i = 0;
-setInterval(() => {
-  i++;
-  pubsub.publish('hello', `world ${i}`);
-}, 5_000);
+// TODO ignore for now, make something working with the query
+// let i = 0;
+// setInterval(() => {
+//   i++;
+//   pubsub.publish('hello', `world ${i}`);
+// }, 5_000);
 
 const server = createServer(yoga);
 server.listen(4000, () => {
