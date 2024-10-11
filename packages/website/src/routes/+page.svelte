@@ -4,6 +4,7 @@
 
 	import ColorPicker from '$lib/components/ColorPicker.svelte';
 	import PixelPicker from '$lib/components/PixelPicker.svelte';
+	import ColorPixelForm from '$lib/components/ColorPixelForm.svelte';
 	
 	export let data;
 
@@ -14,6 +15,8 @@
 			console.log('Received from the server:', data);
 		})
 	);
+
+	const size = 10;
 
 	let selectedColor: string;
 	const handleSelectedColor = (selected: string) => {
@@ -35,4 +38,9 @@
 <ColorPicker colors={["red", "blue", "orange"]} onColorSelected={handleSelectedColor} {selectedColor} />
 
 <h2>Choose a pixel { selectedPixel ? `- ${selectedPixel.x}:${selectedPixel.y}` : '' }</h2>
-<PixelPicker size={20} onPixelSelected={handleSelectedPixel} {selectedPixel} />
+<PixelPicker {size} onPixelSelected={handleSelectedPixel} {selectedPixel} />
+
+{#if selectedColor && selectedPixel}
+	<h2>Submit choice</h2>
+	<ColorPixelForm color={selectedColor} pixel={selectedPixel} />
+{/if}
