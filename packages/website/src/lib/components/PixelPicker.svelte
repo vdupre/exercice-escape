@@ -1,5 +1,9 @@
 <script lang="ts" >
+	import type { Grid } from "$lib/types/grid";
+
     export let size: number;
+	export let values: Grid;
+
 	export let onPixelSelected: (pixelSelected: Pixel) => void;
 	export let selectedPixel: Pixel;
 
@@ -14,6 +18,7 @@
 			{#each Array.from({ length: size }, (_, j) => j) as j}
 				<div 
 					class="cell" class:selectedPixel={selectedPixel && i === selectedPixel.x && j === selectedPixel.y} 
+					style="background-color: {values[i][j]};"
 					on:click={handlePixelSelected(i, j)} 
 				></div>
 			{/each}

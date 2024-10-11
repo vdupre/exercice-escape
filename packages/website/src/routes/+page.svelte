@@ -16,8 +16,6 @@
 		})
 	);
 
-	const size = 10;
-
 	let selectedColor: string;
 	const handleSelectedColor = (selected: string) => {
 		selectedColor = selected;
@@ -38,7 +36,7 @@
 <ColorPicker colors={["red", "blue", "orange"]} onColorSelected={handleSelectedColor} {selectedColor} />
 
 <h2>Choose a pixel { selectedPixel ? `- ${selectedPixel.x}:${selectedPixel.y}` : '' }</h2>
-<PixelPicker {size} onPixelSelected={handleSelectedPixel} {selectedPixel} />
+<PixelPicker size={data.size} onPixelSelected={handleSelectedPixel} {selectedPixel} values={data.cells} />
 
 {#if selectedColor && selectedPixel}
 	<h2>Submit choice</h2>
