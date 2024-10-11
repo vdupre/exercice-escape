@@ -1,9 +1,10 @@
 <script lang="ts" >
-	import ColorPicker from '$lib/components/ColorPicker.svelte';
-	import Grid from '$lib/components/Grid.svelte';
-import { subscribe } from '$lib/graphql';
 	import { onMount } from 'svelte';
+	import { subscribe } from '$lib/graphql';
 
+	import ColorPicker from '$lib/components/ColorPicker.svelte';
+	import PixelPicker from '$lib/components/PixelPicker.svelte';
+	
 	export let data;
 
 	$: displayed = JSON.stringify(data, null, 2);
@@ -19,7 +20,10 @@ import { subscribe } from '$lib/graphql';
 		selectedColor = selected;
 	};
 
-	
+	let selectedPixel: Pixel;
+	const handleSelectedPixel = (selected: Pixel) => {
+		selectedPixel = selected;
+	};
 
 </script>
 
@@ -28,7 +32,7 @@ import { subscribe } from '$lib/graphql';
 <p>Received from the server: {displayed}</p>
 
 <h2>Pick a color { selectedColor ? `- ${selectedColor}` : '' }</h2>
-<ColorPicker onColorSelected={handleSelectedColor} colors={["red", "blue", "orange"]} {selectedColor} />
+<ColorPicker colors={["red", "blue", "orange"]} onColorSelected={handleSelectedColor} {selectedColor} />
 
-<h2>Choose a pixel</h2>
-<Grid size={20} />
+<h2>Choose a pixel { selectedPixel ? `- ${selectedPixel.x}:${selectedPixel.y}` : '' }</h2>
+<PixelPicker size={20} onPixelSelected={handleSelectedPixel} {selectedPixel} />
