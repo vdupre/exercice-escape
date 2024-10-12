@@ -24,7 +24,7 @@
 {#if selectedPixel}
 	<h2>2. Pick a color {selectedColor ? `- ${selectedColor}` : ''}</h2>
 	<ColorPicker
-		colors={['red', 'blue', 'orange']}
+		colors={data.pixelGrid.colors}
 		onColorSelected={handleSelectedColor}
 		{selectedColor}
 	/>

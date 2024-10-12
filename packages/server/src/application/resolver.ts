@@ -1,7 +1,7 @@
 import type { PixelDTO } from './dtos/pixel.dto.js';
 import type { Pixel } from '../domain/model/pixel.model.js';
 import { colorPixel } from '../domain/behavior/color-pixel.behavior.js';
-import { getGridSize } from '../domain/model/grid.model.js';
+import { getColors, getGridSize } from '../domain/model/grid.model.js';
 import { getCurrentGrid } from '../domain/behavior/get-current-grid.behavior.js';
 
 export const resolvers = {
@@ -9,6 +9,7 @@ export const resolvers = {
     pixelGrid: async () => {
       return {
         size: getGridSize(),
+        colors: getColors(),
         cells: getCurrentGrid()
       };
     }
@@ -27,5 +28,5 @@ export const resolvers = {
       // return saved value, here input = output
       return pixelDTO;
     }
-  },
+  }
 };

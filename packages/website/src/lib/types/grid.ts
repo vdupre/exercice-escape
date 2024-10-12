@@ -3,5 +3,6 @@ export type Cells = Cell[][];
 
 export type PixelGrid = {
 	size: number;
+	colors: string[];
 	cells: Cells;
 };

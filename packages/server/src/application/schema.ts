@@ -18,6 +18,7 @@ export const schema = `
     
     type PixelGrid {
         size: Int!
+        colors: [String]
         cells: [[Color]]
     }
 `;

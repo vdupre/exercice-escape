@@ -8,11 +8,13 @@ import type { Pixel } from './pixel.model.js';
 export type Grid = GridEntity;
 
 const SIZE = 10;
+const COLORS = ['blue', 'green', 'red', 'orange'];
 
 export const generateEmptyGrid = (): Grid =>
   Array.from({ length: SIZE }, () => Array(10).fill(null));
 
 export const getGridSize = () => SIZE;
+export const getColors = () => COLORS;
 
 export const updateGridWithPixel = (grid: Grid, pixel: Pixel): Grid => {
   const { x, y, color } = pixel;

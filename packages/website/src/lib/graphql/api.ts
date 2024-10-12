@@ -6,6 +6,7 @@ export const getPixelGrid = async (): Promise<PixelGrid> => {
 		query pixelGrid {
 			pixelGrid {
 				size
+				colors
 				cells
 			}
 		}
