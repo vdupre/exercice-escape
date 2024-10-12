@@ -1,4 +1,5 @@
-import { colorPixel, getPixelGrid } from '$lib/graphql/api.js';
+import { getPixelGrid } from '$lib/graphql/queries.js';
+import { colorPixel } from '$lib/graphql/mutations.js';
 
 export const load = async () => {
 	const pixelGrid = await getPixelGrid();

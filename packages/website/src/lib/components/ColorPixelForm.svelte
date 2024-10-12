@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { enhance } from "$app/forms";
+	import { enhance } from '$app/forms';
 
 	export let color: string;
 	export let pixel: Pixel;
 </script>
 
-<form method="POST" action="?/create" use:enhance >
+<form method="POST" action="?/create" use:enhance>
 	<p>
 		Reminder: you have selected the color <strong>{color}</strong> and the pixel
 		<strong>({pixel.x},{pixel.y})</strong>
