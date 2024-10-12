@@ -28,7 +28,6 @@
 declare module '$env/static/private' {
 	export const USER: string;
 	export const npm_config_user_agent: string;
-	export const SSH_AGENT_PID: string;
 	export const npm_node_execpath: string;
 	export const WT_PROFILE_ID: string;
 	export const SHLVL: string;
@@ -68,7 +67,6 @@ declare module '$env/static/private' {
 	export const LANG: string;
 	export const LS_COLORS: string;
 	export const npm_lifecycle_script: string;
-	export const SSH_AUTH_SOCK: string;
 	export const SHELL: string;
 	export const npm_package_version: string;
 	export const npm_lifecycle_event: string;
@@ -118,7 +116,6 @@ declare module '$env/dynamic/private' {
 	export const env: {
 		USER: string;
 		npm_config_user_agent: string;
-		SSH_AGENT_PID: string;
 		npm_node_execpath: string;
 		WT_PROFILE_ID: string;
 		SHLVL: string;
@@ -158,7 +155,6 @@ declare module '$env/dynamic/private' {
 		LANG: string;
 		LS_COLORS: string;
 		npm_lifecycle_script: string;
-		SSH_AUTH_SOCK: string;
 		SHELL: string;
 		npm_package_version: string;
 		npm_lifecycle_event: string;
