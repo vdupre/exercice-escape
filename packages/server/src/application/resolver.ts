@@ -1,17 +1,11 @@
-import { createPubSub } from 'graphql-yoga';
 import type { PixelDTO } from './dtos/pixel.dto.js';
 import type { Pixel } from '../domain/model/pixel.model.js';
 import { colorPixel } from '../domain/behavior/color-pixel.behavior.js';
 import { getGridSize } from '../domain/model/grid.model.js';
 import { getCurrentGrid } from '../domain/behavior/get-current-grid.behavior.js';
 
-export const pubsub = createPubSub<{
-  hello: [string];
-}>();
-
 export const resolvers = {
   Query: {
-    hello: () => 'world',
     pixelGrid: async () => {
       return {
         size: getGridSize(),
@@ -34,10 +28,4 @@ export const resolvers = {
       return pixelDTO;
     }
   },
-  Subscription: {
-    hello: {
-      subscribe: () => pubsub.subscribe('hello'),
-      resolve: (payload: any) => payload
-    }
-  }
 };
