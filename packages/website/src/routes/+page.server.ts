@@ -24,22 +24,23 @@ export const load = async () => {
 		}
 	`); //.then((response) => console.log({data: response.data}) /*model.parse(res).data*/);
 
-	const {size, cells} = response.data.pixelGrid;
+	const { size, cells } = response.data.pixelGrid;
 
 	return {
-		size, 
+		size,
 		cells
-	}
+	};
 };
 
 export const actions = {
-    create: async ({ request }) => {
-        const data = await request.formData();
-        const x = Number(data.get('x') as string);
-        const y = Number(data.get('y') as string);
-        const color = data.get('color') as string;
+	create: async ({ request }) => {
+		const data = await request.formData();
+		const x = Number(data.get('x') as string);
+		const y = Number(data.get('y') as string);
+		const color = data.get('color') as string;
 
-        await gql(`
+		await gql(
+			`
 			mutation colorPixel ($color: String!, $x: Int!, $y: Int!) {
 				colorPixel(color: $color, x: $x, y: $y) {
 					color
@@ -47,8 +48,12 @@ export const actions = {
 					y
 				}
 			}
-		`, {
-			x, y, color
-		});
-    },
+		`,
+			{
+				x,
+				y,
+				color
+			}
+		);
+	}
 };

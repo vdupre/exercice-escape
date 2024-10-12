@@ -1,4 +1,4 @@
 type Pixel = {
-    x: number;
-    y: number;
+	x: number;
+	y: number;
 };
