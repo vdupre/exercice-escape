@@ -1,20 +1,9 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { subscribe } from '$lib/graphql';
-
 	import ColorPicker from '$lib/components/ColorPicker.svelte';
 	import PixelPicker from '$lib/components/PixelPicker.svelte';
 	import ColorPixelForm from '$lib/components/ColorPixelForm.svelte';
 
 	export let data;
-
-	$: displayed = JSON.stringify(data, null, 2);
-
-	onMount(() =>
-		subscribe(/* GraphQL */ 'subscription { hello }', (data) => {
-			console.log('Received from the server:', data);
-		})
-	);
 
 	let selectedColor: string;
 	const handleSelectedColor = (selected: string) => {
@@ -29,24 +18,19 @@
 
 <h1>r/ploce</h1>
 
-<p>Received from the server: {displayed}</p>
+<h2>1. Choose a pixel {selectedPixel ? `- ${selectedPixel.x}:${selectedPixel.y}` : ''}</h2>
+<PixelPicker pixelGrid={data.pixelGrid} onPixelSelected={handleSelectedPixel} {selectedPixel} />
 
-<h2>Pick a color {selectedColor ? `- ${selectedColor}` : ''}</h2>
-<ColorPicker
-	colors={['red', 'blue', 'orange']}
-	onColorSelected={handleSelectedColor}
-	{selectedColor}
-/>
+{#if selectedPixel}
+	<h2>2. Pick a color {selectedColor ? `- ${selectedColor}` : ''}</h2>
+	<ColorPicker
+		colors={['red', 'blue', 'orange']}
+		onColorSelected={handleSelectedColor}
+		{selectedColor}
+	/>
+{/if}
 
-<h2>Choose a pixel {selectedPixel ? `- ${selectedPixel.x}:${selectedPixel.y}` : ''}</h2>
-<PixelPicker
-	size={data.size}
-	onPixelSelected={handleSelectedPixel}
-	{selectedPixel}
-	values={data.cells}
-/>
-
-{#if selectedColor && selectedPixel}
-	<h2>Submit choice</h2>
+{#if selectedPixel && selectedColor}
+	<h2>3. Submit choice</h2>
 	<ColorPixelForm color={selectedColor} pixel={selectedPixel} />
 {/if}

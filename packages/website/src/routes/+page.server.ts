@@ -1,34 +1,10 @@
-import { gql } from '$lib/graphql';
-import { z } from 'zod';
-
-// const model = z.object({
-// 	data: z.object({
-// 		hello: z.string()
-// 	})
-// });
-
-// const model = z.object({
-// 	data: z.object({
-// 	  size: z.number(),
-// 	  cells: z.array(z.array(z.string().nullable())),
-// 	})
-//   });
+import { colorPixel, getPixelGrid } from '$lib/graphql/api.js';
 
 export const load = async () => {
-	const response = await gql(/* GraphQL */ `
-		query pixelGrid {
-			pixelGrid {
-				size
-				cells
-			}
-		}
-	`); //.then((response) => console.log({data: response.data}) /*model.parse(res).data*/);
-
-	const { size, cells } = response.data.pixelGrid;
+	const pixelGrid = await getPixelGrid();
 
 	return {
-		size,
-		cells
+		pixelGrid
 	};
 };
 
@@ -39,21 +15,6 @@ export const actions = {
 		const y = Number(data.get('y') as string);
 		const color = data.get('color') as string;
 
-		await gql(
-			`
-			mutation colorPixel ($color: String!, $x: Int!, $y: Int!) {
-				colorPixel(color: $color, x: $x, y: $y) {
-					color
-					x
-					y
-				}
-			}
-		`,
-			{
-				x,
-				y,
-				color
-			}
-		);
+		await colorPixel(x, y, color);
 	}
 };

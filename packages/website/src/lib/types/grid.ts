@@ -1,1 +1,7 @@
-export type Grid = Record<number, Record<number, string | null>>;
+type Cell = string | null;
+export type Cells = Cell[][];
+
+export type PixelGrid = {
+	size: number;
+	cells: Cells;
+};

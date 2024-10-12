@@ -4,7 +4,10 @@
 </script>
 
 <form method="POST" action="?/create">
-	<p>Reminder: you selected the color "{color}" and the pixel "({pixel.x},{pixel.y})"</p>
+	<p>
+		Reminder: you have selected the color <strong>{color}</strong> and the pixel
+		<strong>({pixel.x},{pixel.y})</strong>
+	</p>
 
 	<input type="hidden" name="x" value={pixel.x} />
 	<input type="hidden" name="y" value={pixel.y} />

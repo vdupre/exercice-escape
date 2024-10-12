@@ -1,27 +1,41 @@
 <script lang="ts">
-	import type { Grid } from '$lib/types/grid';
+	import type { PixelGrid } from '$lib/types/grid';
 
-	export let size: number;
-	export let values: Grid;
+	export let pixelGrid: PixelGrid;
 
 	export let onPixelSelected: (pixelSelected: Pixel) => void;
 	export let selectedPixel: Pixel;
 
-	const handlePixelSelected = (x: number, y: number) => () => {
+	const handlePixelClicked = (x: number, y: number) => () => {
 		onPixelSelected({ x, y });
+	};
+
+	const handleKeyDown = (x: number, y: number) => (event: KeyboardEvent) => {
+		if (event.key === 'Enter' || event.key === ' ') {
+			onPixelSelected({ x, y });
+		}
+	};
+
+	$: isSelectedPixel = (x: number, y: number) => {
+		return selectedPixel && x === selectedPixel.x && y === selectedPixel.y;
 	};
 </script>
 
 <div class="grid">
-	{#each Array.from({ length: size }, (_, i) => i) as i}
+	{#each Array.from({ length: pixelGrid.size }, (_, x) => x) as i}
 		<div class="row">
-			{#each Array.from({ length: size }, (_, j) => j) as j}
+			{#each Array.from({ length: pixelGrid.size }, (_, y) => y) as j}
 				<div
+					role="button"
+					tabindex={i * 10 + j + 1}
 					class="cell"
-					class:selectedPixel={selectedPixel && i === selectedPixel.x && j === selectedPixel.y}
-					style="background-color: {values[i][j]};"
-					on:click={handlePixelSelected(i, j)}
-				></div>
+					class:selectedPixel={isSelectedPixel(i, j)}
+					style="background-color: {pixelGrid.cells[i][j]};"
+					on:click={handlePixelClicked(i, j)}
+					on:keydown={handleKeyDown(i, j)}
+				>
+					{isSelectedPixel(i, j) ? 'x' : ''}
+				</div>
 			{/each}
 		</div>
 	{/each}
@@ -43,9 +57,10 @@
 		height: 20px;
 		background-color: #f0f0f0;
 		border: 1px solid #ccc;
+		text-align: center;
 	}
 
 	.selectedPixel {
-		outline: 2px solid black;
+		background-color: #c0c0c0;
 	}
 </style>
