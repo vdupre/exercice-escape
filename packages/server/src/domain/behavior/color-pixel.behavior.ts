@@ -6,12 +6,13 @@ import {
   saveGrid
 } from '../../infrastructure/storage/file.storage.js';
 
-export const colorPixel = async (pixel: Pixel) => {
+export const colorPixel = async (pixel: Pixel): Promise<Grid> => {
   await initGridIsNeeded();
 
   let grid: Grid = await readGrid();
 
   const updatedGrid = updateGridWithPixel(grid, pixel);
-
   saveGrid(updatedGrid);
+
+  return updatedGrid;
 };

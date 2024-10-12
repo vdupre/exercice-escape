@@ -1,22 +1,19 @@
 import { createServer } from 'node:http';
 import { createSchema, createYoga } from 'graphql-yoga';
+import { useGraphQLSSE } from '@graphql-yoga/plugin-graphql-sse';
 
 import { schema } from './application/schema.js';
-import { /*pubsub,*/ resolvers } from './application/resolver.js';
+import { resolvers } from './application/resolver.js';
 
 const yoga = createYoga({
   schema: createSchema({
     typeDefs: schema,
     resolvers
-  })
+  }),
+  plugins: [
+    useGraphQLSSE(),
+  ]
 });
-
-// TODO ignore for now, make something working with the query
-// let i = 0;
-// setInterval(() => {
-//   i++;
-//   pubsub.publish('hello', `world ${i}`);
-// }, 5_000);
 
 const server = createServer(yoga);
 server.listen(4000, () => {

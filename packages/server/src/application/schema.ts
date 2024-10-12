@@ -2,19 +2,23 @@
 export const schema = `
     type Query {
         pixelGrid: PixelGrid
-    },
+    }
 
     type Mutation {
         colorPixel(color: String!, x: Int!, y: Int!): Pixel
-    },
+    }
+
+    type Subscription {
+        gridUpdated: [[Color]]
+    }
 
     type Pixel {
         x: Int!
         y: Int!
         color: String
-    },
+    }
 
-    scalar Color,
+    scalar Color
     
     type PixelGrid {
         size: Int!

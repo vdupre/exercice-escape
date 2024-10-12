@@ -1,8 +1,12 @@
 import type { PixelDTO } from './dtos/pixel.dto.js';
 import type { Pixel } from '../domain/model/pixel.model.js';
 import { colorPixel } from '../domain/behavior/color-pixel.behavior.js';
-import { getColors, getGridSize } from '../domain/model/grid.model.js';
+import { getColors, getGridSize, type Grid } from '../domain/model/grid.model.js';
 import { getCurrentGrid } from '../domain/behavior/get-current-grid.behavior.js';
+import { createPubSub } from 'graphql-yoga';
+
+export const pubsub = createPubSub();
+const GRID_UPDATED = 'gridUpdated';
 
 export const resolvers = {
   Query: {
@@ -23,10 +27,20 @@ export const resolvers = {
       const pixel: Pixel = { ...pixelDTO };
 
       // call the domain
-      await colorPixel(pixel);
+      const grid = await colorPixel(pixel);
+
+      pubsub.publish(GRID_UPDATED, grid);
 
       // return saved value, here input = output
       return pixelDTO;
     }
+  },
+  Subscription: {
+    gridUpdated: {
+      subscribe: () => pubsub.subscribe(GRID_UPDATED),
+      resolve: (grid: Grid) => {
+        return grid;
+      },
+    },
   }
 };
