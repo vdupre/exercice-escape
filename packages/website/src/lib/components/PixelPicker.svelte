@@ -27,7 +27,7 @@
 			{#each Array.from({ length: pixelGrid.size }, (_, y) => y) as j}
 				<div
 					role="button"
-					tabindex={i * 10 + j + 1}
+					tabindex={(i * pixelGrid.size) + j + 1}
 					class="cell"
 					class:selectedPixel={isSelectedPixel(i, j)}
 					style="background-color: {pixelGrid.cells[i][j]};"
@@ -58,6 +58,7 @@
 		background-color: #f0f0f0;
 		border: 1px solid #ccc;
 		text-align: center;
+		transition: background-color 0.5s ease;
 	}
 
 	.selectedPixel {
