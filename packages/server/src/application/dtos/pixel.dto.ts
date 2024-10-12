@@ -1,5 +1,5 @@
 export type PixelDTO = {
-    x: number;
-    y: number;
-    color: string;
+  x: number;
+  y: number;
+  color: string;
 };
